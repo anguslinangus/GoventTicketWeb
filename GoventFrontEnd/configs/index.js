@@ -9,6 +9,16 @@ export const avatarBaseUrl = process.env.NODE_ENV === 'production'
   ? 'https://goventbackend.onrender.com/avatar'
   : 'http://localhost:3005/avatar'
 
+// 圖片基礎 URL
+export const imageBaseUrl = process.env.NODE_ENV === 'production'
+  ? 'https://goventbackend.onrender.com/images'
+  : 'http://localhost:3005/images'
+
+// 完整的後端基礎 URL (不含 /api)
+export const backendBaseUrl = process.env.NODE_ENV === 'production'
+  ? 'https://goventbackend.onrender.com'
+  : 'http://localhost:3005'
+
 // breadcrumb面包屑使用
 // 用pathname英文對照中文的名稱(類似關聯陣列的物件)
 // 使用方式需用 ex. pathnameLocale['home']

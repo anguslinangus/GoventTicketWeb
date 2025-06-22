@@ -9,6 +9,7 @@ import LoadingLayout from '@/components/layout/loading-layout'
 import { useRouter } from 'next/router'
 import { useAuth } from '@/hooks/use-auth'
 import { useGoogleAuth } from '@/hooks/firebase-google-auth'
+import { apiBaseUrl } from '@/configs'
 import 'react-toastify/dist/ReactToastify.css'
 
 export default function Signin() {
@@ -63,7 +64,7 @@ export default function Signin() {
     // console.log(formData)
 
     try {
-      const response = await fetch('http://localhost:3005/api/user/signin', {
+              const response = await fetch(`${apiBaseUrl}/user/signin`, {
         method: 'POST',
         headers: {
           'Content-type': 'application/json',
