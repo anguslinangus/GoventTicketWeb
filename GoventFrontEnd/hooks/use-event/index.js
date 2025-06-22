@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { apiBaseUrl } from '@/configs'
 // import { CiGlass } from 'react-icons/ci'
 
 export default function useEvents() {
@@ -8,7 +9,7 @@ export default function useEvents() {
 
   useEffect(() => {
     const fetchData = async () => {
-      fetch('http://localhost:3005/api/events')
+      fetch(`${apiBaseUrl}/events`)
         .then((res) => res.json())
         .then((text) => {
           // setData(text)
