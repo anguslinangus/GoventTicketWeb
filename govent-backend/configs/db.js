@@ -17,6 +17,7 @@ const sequelize = new Sequelize(
     logging: false,
     dialectOptions: {
       connectTimeout: 10000,
+      ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
     },
     define: {
       freezeTableName: true,
