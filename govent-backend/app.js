@@ -99,6 +99,27 @@ for (const filename of filenames) {
 }
 // 載入routes中的各路由檔案，並套用api路由 END
 
+// 添加根路由處理器
+app.get('/', function (req, res) {
+  console.log('🏠 Root route accessed')
+  res.json({ 
+    message: 'Govent Backend API Server',
+    status: 'running',
+    timestamp: new Date().toISOString(),
+    version: '1.1.0',
+    apiEndpoint: '/api/'
+  })
+})
+
+// 添加健康檢查路由
+app.get('/health', function (req, res) {
+  console.log('❤️ Health check accessed')
+  res.json({ 
+    status: 'healthy',
+    timestamp: new Date().toISOString()
+  })
+})
+
 // 捕抓404錯誤處理
 app.use(function (req, res, next) {
   next(createError(404))
