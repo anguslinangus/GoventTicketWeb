@@ -6,10 +6,10 @@ import EventsTypeBar from '@/components/events-type-bar'
 import IndexLayout from '@/components/layout/index-layout'
 import { motion, useTime, useTransform } from 'framer-motion'
 
-// 載入svg
-import GoventStar from '@/public/images/index-silder/govent-star.svg'
-import BG01 from '@/public/images/index-silder/bg-01.svg'
-import BG02 from '@/public/images/index-silder/bg-02.svg'
+// 載入svg - 改用 Image 組件或直接使用路徑
+// import GoventStar from '/images/index-silder/govent-star.svg'
+// import BG01 from '/images/index-silder/bg-01.svg'
+// import BG02 from '/images/index-silder/bg-02.svg'
 
 export default function Home() {
   const time = useTime()
@@ -38,7 +38,7 @@ export default function Home() {
               transition={{ duration: 0.7, delay: 0.8 }}
               className="govent-star"
             >
-              <GoventStar />
+              <img src="/images/index-silder/govent-star.svg" alt="Govent Star" />
             </motion.div>
             <motion.div
               initial={{ y: 50, opacity: 0 }}
@@ -47,7 +47,7 @@ export default function Home() {
               style={{ rotate }}
               className="bg-rotate"
             >
-              <BG01 className={`bg-01-color`} />
+              <img src="/images/index-silder/bg-01.svg" alt="Background 01" className="bg-01-color" />
             </motion.div>
           </div>
           <Carousel.Caption
@@ -103,7 +103,7 @@ export default function Home() {
               transition={{ duration: 0.7, delay: 0.8 }}
               className="govent-star"
             >
-              <GoventStar />
+              <img src="/images/index-silder/govent-star.svg" alt="Govent Star" />
             </motion.div>
             <motion.div
               initial={{ y: 50, opacity: 0 }}
@@ -112,7 +112,7 @@ export default function Home() {
               style={{ rotate }}
               className="bg-rotate"
             >
-              <BG02 className="bg-02-color" />
+              <img src="/images/index-silder/bg-02.svg" alt="Background 02" className="bg-02-color" />
             </motion.div>
           </div>
           <Carousel.Caption
