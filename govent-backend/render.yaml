@@ -9,4 +9,7 @@ services:
       - key: NODE_ENV
         value: production
     healthCheckPath: /api/
-    numInstances: 1 
+    numInstances: 1
+
+# 注意：敏感資訊應該在 Render Dashboard 中設定環境變數
+# 不要在此文件中包含密碼、API 金鑰等敏感資訊 
