@@ -1,6 +1,7 @@
 import { result } from 'lodash'
 import React, { createContext, useState, useContext, useEffect } from 'react'
 import useLocalStorage from '@/hooks/use-localstorage'
+import { apiBaseUrl } from '@/configs'
 const _ = require('lodash')
 
 //建立context
@@ -47,7 +48,7 @@ export function CartProvider({
   useEffect(() => {
     const getCartMt = async () => {
       try {
-        const response = await fetch('http://localhost:3005/api/cart')
+        const response = await fetch(`${apiBaseUrl}/cart`)
         if (!response.ok) {
           throw new Error('Network response was not ok')
         }

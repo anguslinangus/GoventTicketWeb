@@ -1,6 +1,7 @@
 import { useState, useContext, createContext, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { getFavs } from '@/services/user'
+import { apiBaseUrl } from '@/configs'
 
 const AuthContext = createContext(null)
 
@@ -85,7 +86,7 @@ export const AuthProvider = ({ children }) => {
   const verifyToken = async () => {
     try {
       const response = await fetch(
-        'http://localhost:3005/api/user/verifyToken',
+        `${apiBaseUrl}/user/verifyToken`,
         {
           method: 'GET',
           credentials: 'include', // To send the cookie with the request
@@ -110,7 +111,7 @@ export const AuthProvider = ({ children }) => {
 
   // Sign in action
   const signIn = async () => {
-    const response = await fetch('http://localhost:3005/api/user/verifyToken', {
+    const response = await fetch(`${apiBaseUrl}/user/verifyToken`, {
       method: 'GET',
       credentials: 'include', // To send the cookie with the request
     })
@@ -128,7 +129,7 @@ export const AuthProvider = ({ children }) => {
   // Sign out action
   const signOut = async () => {
     try {
-      await fetch('http://localhost:3005/api/user/signout', {
+      await fetch(`${apiBaseUrl}/user/signout`, {
         method: 'GET',
         credentials: 'include',
       })
