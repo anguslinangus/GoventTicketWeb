@@ -79,11 +79,46 @@ for (const filename of filenames) {
     continue
   }
   
-  const item = await import(pathToFileURL(path.join(routePath, filename)))
-  const slug = filename.split('.')[0]
-  app.use(`${apiPath}/${slug === 'index' ? '' : slug}`, item.default)
+  // 暫時跳過 line-login 路由，如果 LINE 環境變數未設定
+  if (filename === 'line-login.js' && !process.env.LINE_CHANNEL_ID) {
+    console.log('⚠️  Skipping line-login route - LINE_CHANNEL_ID not set')
+    continue
+  }
+  
+  try {
+    console.log(`📂 Loading route: ${filename}`)
+    const item = await import(pathToFileURL(path.join(routePath, filename)))
+    const slug = filename.split('.')[0]
+    const routeUrl = `${apiPath}/${slug === 'index' ? '' : slug}`
+    app.use(routeUrl, item.default)
+    console.log(`✅ Route loaded: ${routeUrl}`)
+  } catch (error) {
+    console.log(`❌ Failed to load route ${filename}:`, error.message)
+    // 繼續載入其他路由，不要因為一個路由失敗就停止
+  }
 }
 // 載入routes中的各路由檔案，並套用api路由 END
+
+// 添加根路由處理器
+app.get('/', function (req, res) {
+  console.log('🏠 Root route accessed')
+  res.json({ 
+    message: 'Govent Backend API Server',
+    status: 'running',
+    timestamp: new Date().toISOString(),
+    version: '1.1.0',
+    apiEndpoint: '/api/'
+  })
+})
+
+// 添加健康檢查路由
+app.get('/health', function (req, res) {
+  console.log('❤️ Health check accessed')
+  res.json({ 
+    status: 'healthy',
+    timestamp: new Date().toISOString()
+  })
+})
 
 // 捕抓404錯誤處理
 app.use(function (req, res, next) {
@@ -92,14 +127,23 @@ app.use(function (req, res, next) {
 
 // 錯誤處理函式
 app.use(function (err, req, res, next) {
+  console.log('🚨 Error occurred:', err.message)
+  console.log('🚨 Error stack:', err.stack)
+  
   // set locals, only providing error in development
   res.locals.message = err.message
   res.locals.error = req.app.get('env') === 'development' ? err : {}
 
-  // render the error page
-  res.status(err.status || 500)
-  // 更改為錯誤訊息預設為JSON格式
-  res.status(500).send({ error: err })
+  // 設定正確的狀態碼
+  const statusCode = err.status || 500
+  res.status(statusCode)
+  
+  // 返回 JSON 錯誤訊息
+  res.json({ 
+    error: err.message,
+    status: statusCode,
+    ...(req.app.get('env') === 'development' && { stack: err.stack })
+  })
 })
 
 export default app
