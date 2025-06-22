@@ -89,9 +89,9 @@ for (const filename of filenames) {
     console.log(`📂 Loading route: ${filename}`)
     const item = await import(pathToFileURL(path.join(routePath, filename)))
     const slug = filename.split('.')[0]
-    const routePath = `${apiPath}/${slug === 'index' ? '' : slug}`
-    app.use(routePath, item.default)
-    console.log(`✅ Route loaded: ${routePath}`)
+    const routeUrl = `${apiPath}/${slug === 'index' ? '' : slug}`
+    app.use(routeUrl, item.default)
+    console.log(`✅ Route loaded: ${routeUrl}`)
   } catch (error) {
     console.log(`❌ Failed to load route ${filename}:`, error.message)
     // 繼續載入其他路由，不要因為一個路由失敗就停止
