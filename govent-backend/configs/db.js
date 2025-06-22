@@ -5,6 +5,22 @@ import 'dotenv/config.js'
 
 import applyModels from '#db-helpers/sequelize/models-setup.js'
 
+// 除錯資訊 - 顯示環境變數狀態
+console.log('🔍 Database Environment Variables:')
+console.log('DB_HOST:', process.env.DB_HOST || 'NOT_SET')
+console.log('DB_PORT:', process.env.DB_PORT || 'NOT_SET')
+console.log('DB_DATABASE:', process.env.DB_DATABASE || 'NOT_SET')
+console.log('DB_USERNAME:', process.env.DB_USERNAME || 'NOT_SET')
+console.log('DB_PASSWORD:', process.env.DB_PASSWORD ? '***SET***' : 'NOT_SET')
+console.log('NODE_ENV:', process.env.NODE_ENV || 'NOT_SET')
+
+// 檢查必要的環境變數
+if (!process.env.DB_HOST || !process.env.DB_PORT || !process.env.DB_DATABASE || 
+    !process.env.DB_USERNAME || !process.env.DB_PASSWORD) {
+  console.error('❌ Missing required database environment variables!')
+  process.exit(1)
+}
+
 // 資料庫連結資訊
 const sequelize = new Sequelize(
   process.env.DB_DATABASE,
@@ -12,7 +28,7 @@ const sequelize = new Sequelize(
   process.env.DB_PASSWORD,
   {
     host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
+    port: parseInt(process.env.DB_PORT),
     dialect: 'mysql',
     logging: false,
     dialectOptions: {
