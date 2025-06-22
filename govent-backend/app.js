@@ -79,6 +79,12 @@ for (const filename of filenames) {
     continue
   }
   
+  // 暫時跳過 line-login 路由，如果 LINE 環境變數未設定
+  if (filename === 'line-login.js' && !process.env.LINE_CHANNEL_ID) {
+    console.log('⚠️  Skipping line-login route - LINE_CHANNEL_ID not set')
+    continue
+  }
+  
   const item = await import(pathToFileURL(path.join(routePath, filename)))
   const slug = filename.split('.')[0]
   app.use(`${apiPath}/${slug === 'index' ? '' : slug}`, item.default)
